@@ -1,6 +1,10 @@
-﻿using MediatR;
+﻿using LinqKit;
+using MediatR;
+using System;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using TodoApp.Domain.Model;
 using TodoApp.Domain.Repositories;
 using TodoApp.Domain.Utilities.Paging;
 
@@ -8,6 +12,9 @@ namespace TodoApp.Bll.Features
 {
     public class TodoQuery : PagedQuery, IRequest<PagedList<TodoItem>>
     {
+        public string SearchTerm { get; set; }
+        public bool ShowCompletedTodos { get; set; }
+        public bool ShowIncompleteTodos { get; set; }
     }
 
     public class TodoItem
@@ -28,8 +35,25 @@ namespace TodoApp.Bll.Features
 
         public async Task<PagedList<TodoItem>> Handle(TodoQuery request, CancellationToken cancellationToken)
         {
+            Expression<Func<Todo, bool>> filter = todo => true;
+
+            if (!string.IsNullOrEmpty(request.SearchTerm))
+            {
+                filter = filter.And(todo => todo.Description.ToLower().Contains(request.SearchTerm.ToLower()));
+            }
+
+            if (!request.ShowCompletedTodos)
+            {
+                filter = filter.And(todo => !todo.IsComplete);
+            }
+
+            if (!request.ShowIncompleteTodos)
+            {
+                filter = filter.And(todo => todo.IsComplete);
+            }
+
             var todos = await todoRepository.GetTodosAsync(
-                filter: null,
+                filter: filter,
                 todo => new TodoItem
                 {
                     Id = todo.Id,

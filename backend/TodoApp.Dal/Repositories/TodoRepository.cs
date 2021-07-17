@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using TodoApp.Domain.Exceptions;
 using TodoApp.Domain.Model;
 using TodoApp.Domain.Repositories;
 using TodoApp.Domain.Utilities.Paging;
@@ -20,13 +20,11 @@ namespace TodoApp.Dal.Repositories
             this.dbSet = todoAppDbContext.Set<Todo>();
         }
 
-        public Task<List<Todo>> GetTodosAsync(Expression<Func<Todo, bool>> filter = null, CancellationToken cancellationToken = default)
+        public async Task<Todo> GetAsync(int id, CancellationToken cancellationToken = default)
         {
-            filter ??= todo => true;
+            var todo = await dbSet.SingleOrDefaultAsync(todo => todo.Id == id, cancellationToken);
 
-            return dbSet
-                .Where(filter)
-                .ToListAsync(cancellationToken: cancellationToken);
+            return todo ?? throw new EntityNotFoundException(typeof(Todo), id);
         }
 
         public async Task<PagedList<TResult>> GetTodosAsync<TResult>(
@@ -43,6 +41,8 @@ namespace TodoApp.Dal.Repositories
 
             var items = await dbSet
                 .Where(filter)
+                .OrderBy(todo => todo.IsComplete)
+                    .ThenByDescending(todo => todo.Id)
                 .Skip(pageIndex * pageSize)
                 .Take(pageSize)
                 .Select(selector)

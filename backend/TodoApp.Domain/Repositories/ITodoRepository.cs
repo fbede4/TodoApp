@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,9 +11,11 @@ namespace TodoApp.Domain.Repositories
     {
         Todo Insert(Todo todo);
 
-        Task<List<Todo>> GetTodosAsync(
-            Expression<Func<Todo, bool>> filter = null,
-            CancellationToken cancellationToken = default);
+        Todo Update(Todo todo);
+
+        void Delete(Todo todo);
+
+        Task<Todo> GetAsync(int id, CancellationToken cancellationToken = default);
 
         Task<PagedList<TResult>> GetTodosAsync<TResult>(
             Expression<Func<Todo, bool>> filter,

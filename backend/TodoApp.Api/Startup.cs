@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -5,8 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 using System.Reflection;
+using TodoApp.Api.Middlewares.ErrorHandling;
+using TodoApp.Bll.PipelineBehaviors;
 using TodoApp.Dal;
 using TodoApp.Dal.Repositories;
 using TodoApp.Dal.UoW;
@@ -32,17 +34,34 @@ namespace TodoApp.Api
                 opt.UseSqlite(Configuration.GetConnectionString("TodoAppDbContext"));
             });
 
+            services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
+            {
+                builder
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowAnyOrigin();
+            }));
+
             services.AddScoped<IUnitOfWork, EfCoreUnitOfWork>(sp => new EfCoreUnitOfWork(sp.GetRequiredService<TodoAppDbContext>()));
 
             services.AddScoped<ITodoRepository, TodoRepository>();
 
             services.AddMediatR(Assembly.Load("TodoApp.Bll"));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkPipelineBehavior<,>));
 
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TodoApp", Version = "v1" });
-            });
+            services.AddControllers()
+                .AddFluentValidation(config =>
+                {
+                    config.RegisterValidatorsFromAssembly(Assembly.Load("TodoApp.Bll"));
+                });
+
+            services
+                .AddOpenApiDocument(d =>
+                {
+                    d.DocumentName = "TodoApp API";
+                    d.Title = d.DocumentName;
+                    d.UseRouteNameAsOperationId = true;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,10 +69,13 @@ namespace TodoApp.Api
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TodoApp v1"));
+                app.UseOpenApi();
+                app.UseSwaggerUi3();
             }
+
+            app.UseMiddleware<ErrorHandlerMiddleware>();
+
+            app.UseCors("CorsPolicy");
 
             app.UseRouting();
 
