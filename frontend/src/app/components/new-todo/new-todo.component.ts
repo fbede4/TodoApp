@@ -13,7 +13,9 @@ export class NewTodoComponent {
   add: EventEmitter<CreateTodoCommand> = new EventEmitter();
 
   addTodo(): void {
-    this.add.emit(this.newTodo);
-    this.newTodo = new CreateTodoCommand();
+    if (this.newTodo.description) {
+      this.add.emit(this.newTodo);
+      this.newTodo = new CreateTodoCommand();
+    }
   }
 }

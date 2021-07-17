@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TodoItem } from '@app/clients';
 
 @Component({
@@ -8,6 +9,7 @@ import { TodoItem } from '@app/clients';
 })
 export class TodoListItemComponent {
   isEditing: boolean;
+  form: FormGroup;
 
   @Input() todo: TodoItem;
 
@@ -20,13 +22,21 @@ export class TodoListItemComponent {
   @Output()
   toggleIsComplete: EventEmitter<TodoItem> = new EventEmitter();
 
+  constructor(formBuilder: FormBuilder) {
+    this.form = formBuilder.group({
+      description: ['', [Validators.required]],
+    });
+  }
+
   onToggleIsComplete(): void {
     this.toggleIsComplete.emit(this.todo);
   }
 
   onEditTodoDescription(): void {
-    this.toggleIsEditing();
-    this.edit.emit(this.todo);
+    if (!this.form.controls.description.errors?.required) {
+      this.toggleIsEditing();
+      this.edit.emit(this.todo);
+    }
   }
 
   deleteTodo(): void {

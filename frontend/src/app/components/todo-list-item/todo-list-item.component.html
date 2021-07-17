@@ -7,13 +7,17 @@
       (click)="onToggleIsComplete()"
     ></mat-checkbox>
     <div>
-      <mat-form-field *ngIf="isEditing; else label">
-        <input
-          matInput
-          [(ngModel)]="todo.description"
-          (keyup.enter)="onEditTodoDescription()"
-        />
-      </mat-form-field>
+      <form *ngIf="isEditing; else label" [formGroup]="form">
+        <mat-form-field>
+          <input
+            matInput
+            [(ngModel)]="todo.description"
+            (keyup.enter)="onEditTodoDescription()"
+            formControlName="description"
+          />
+          <mat-error *ngIf="form.controls.description.errors?.required">Description is required</mat-error>
+        </mat-form-field>
+      </form>
     </div>
 
     <ng-template #label>
