@@ -1,0 +1,9 @@
+@import "../../../theme/variables.scss";
+
+.footer {
+  color: $background-color;
+  display: flex;
+  justify-content: flex-end;
+  padding: 5px 10px;
+  border-top: 1px solid $color-secondary;
+}

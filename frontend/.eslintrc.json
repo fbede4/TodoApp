@@ -1,0 +1,164 @@
+{
+  "root": true,
+  "ignorePatterns": ["projects/**/*"],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "parserOptions": {
+        "project": ["tsconfig.json", "e2e/tsconfig.json"],
+        "createDefaultProgram": true
+      },
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@angular-eslint/ng-cli-compat",
+        "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:import/recommended",
+        "plugin:import/typescript",
+        "prettier"
+      ],
+      "plugins": ["only-warn", "prefer-arrow", "jsdoc", "import", "rxjs"],
+      "rules": {
+        "no-prototype-builtins": "off",
+        "no-nested-ternary": "warn",
+        "@angular-eslint/component-selector": [
+          "warn",
+          {
+            "type": "element",
+            "prefix": "app",
+            "style": "kebab-case"
+          }
+        ],
+        "@angular-eslint/directive-selector": [
+          "warn",
+          {
+            "type": "attribute",
+            "prefix": "app",
+            "style": "camelCase"
+          }
+        ],
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": ["warn"],
+        "@typescript-eslint/explicit-member-accessibility": [
+          "warn",
+          {
+            "accessibility": "no-public"
+          }
+        ],
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars-experimental": "warn",
+        "@typescript-eslint/no-unused-vars": [
+          "warn",
+          {
+            "argsIgnorePattern": "^_",
+            "varsIgnorePattern": "^_"
+          }
+        ],
+        "@typescript-eslint/explicit-function-return-type": [
+          "warn",
+          {
+            "allowExpressions": true
+          }
+        ],
+        "@typescript-eslint/member-ordering": "off",
+        "@typescript-eslint/array-type": [
+          "warn",
+          { "default": "array-simple" }
+        ],
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/no-this-alias": [
+          "warn",
+          {
+            "allowedNames": ["self"]
+          }
+        ],
+        "@typescript-eslint/class-literal-property-style": ["warn", "fields"],
+        "@typescript-eslint/no-unnecessary-boolean-literal-compare": "warn",
+        "@typescript-eslint/non-nullable-type-assertion-style": "warn",
+        "@typescript-eslint/prefer-for-of": "warn",
+        "@typescript-eslint/prefer-includes": "warn",
+        "@typescript-eslint/prefer-string-starts-ends-with": "warn",
+        "@typescript-eslint/consistent-indexed-object-style": [
+          "warn",
+          "record"
+        ],
+        "@typescript-eslint/naming-convention": [
+          "warn",
+          {
+            "selector": "enumMember",
+            "format": ["camelCase", "PascalCase"]
+          }
+        ],
+        "prefer-arrow/prefer-arrow-functions": [
+          "warn",
+          {
+            "allowStandaloneDeclarations": true
+          }
+        ],
+        "no-underscore-dangle": "off",
+        "arrow-body-style": "off",
+        "no-restricted-imports": [
+          "warn",
+          {
+            "paths": [
+              { "name": "lodash", "message": "Please import lodash-es instead" }
+            ]
+          }
+        ],
+        "jsdoc/check-param-names": "warn",
+        "jsdoc/check-property-names": "warn",
+        "jsdoc/no-types": "warn",
+        "import/no-unresolved": "off",
+        "import/no-useless-path-segments": "warn",
+        "import/first": "warn",
+        "import/newline-after-import": "warn",
+        "import/order": [
+          "off", // might want to turn it on if the team wants it
+          {
+            "groups": [
+              ["builtin", "external"],
+              ["internal", "sibling", "parent", "index"],
+              "object"
+            ],
+            "pathGroups": [
+              {
+                "pattern": "@app/**",
+                "group": "internal",
+                "position": "before"
+              }
+            ],
+            "pathGroupsExcludedImportTypes": ["builtin", "object"],
+            "newlines-between": "never",
+            "alphabetize": { "order": "asc" }
+          }
+        ],
+        "rxjs/finnish": [
+          "warn",
+          {
+            "functions": false,
+            "methods": false,
+            "parameters": false,
+            "types": {
+              "^EventEmitter$": false,
+              "Subject$": false
+            }
+          }
+        ],
+        "rxjs/no-unsafe-takeuntil": [
+          "warn",
+          {
+            "alias": ["untilDestroyed"]
+          }
+        ],
+        "rxjs/no-unbound-methods": "warn",
+        "rxjs/no-async-subscribe": "warn"
+      }
+    },
+    {
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
+      "rules": {}
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+<div class="filters">
+  <mat-form-field class="search-form">
+    <input
+      (keyup)="onSearchTermChanged($event.target.value)"
+      matInput
+      placeholder="Search"
+    />
+  </mat-form-field>
+  <mat-checkbox
+    class="checkbox"
+    color="primary"
+    ngModel="filter.showCompletedTodos"
+    (click)="toggleshowCompletedTodos()"
+    >Show complete todos</mat-checkbox
+  >
+  <mat-checkbox
+    class="checkbox"
+    color="primary"
+    ngModel="filter.showIncompleteTodos"
+    (click)="toggleshowIncompleteTodos()"
+    >Show incomplete todos</mat-checkbox
+  >
+</div>

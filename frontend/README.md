@@ -1,27 +1,54 @@
-# Frontend
+# Introduction
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.14.
+SPA client for a Todo app, with an ASP.NET REST API. 
 
-## Development server
+## Setting up the dev environment
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Installing dependencies
 
-## Code scaffolding
+Install the angular CLI globally:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```console
+npm install -g @angular/cli@11
+```
 
-## Build
+You should be able to run the following command in a new console window:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+```console
+ng --version
+```
 
-## Running unit tests
+After you can run the `ng --version` command, go to the project's directory and install it's dependencies:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```console
+cd path/to/project
+npm install
+```
 
-## Running end-to-end tests
+Finally, you should be able to run the dev server with:
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+```console
+ng serve --open
+```
 
-## Further help
+Note: Don't forget to start the backend too or the app won't work!
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Configuring VSCode
+
+VSCode can handle Angular projects by default, but there are some essential extensions for it:
+
+- [EditorConfig](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig): for handling file indentation, quote style, charset (so it's the same for all of us)
+- [Angular Language Service](https://marketplace.visualstudio.com/items?itemName=Angular.ng-template): autocomplete in template files, angular specific diagnostic messages
+- [gitignore](https://marketplace.visualstudio.com/items?itemName=codezombiech.gitignore): to see which files are not under version control
+- [markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint): to lint markdown files (obviously)
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint), [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode): see below
+
+## Code quality
+
+To automatically check as many code quality issues as we can, the project uses [ESLint](https://eslint.org/).
+
+We recommend using it's [VSCode extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) to see warnings during development. The same checks will be run in a CI pipeline during every pull requests.
+
+## Style guide
+
+Use [Prettier](https://prettier.io/).

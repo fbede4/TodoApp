@@ -1,0 +1,36 @@
+<div class="list-item">
+  <div class="left">
+    <mat-checkbox
+      class="checkbox"
+      color="primary"
+      [(ngModel)]="todo.isComplete"
+      (ngModelChange)="onToggleIsComplete()"
+    ></mat-checkbox>
+    <div>
+      <mat-form-field *ngIf="isEditing; else label">
+        <input
+          matInput
+          [(ngModel)]="todo.description"
+          (keyup.enter)="onEditTodoDescription()"
+        />
+      </mat-form-field>
+    </div>
+
+    <ng-template #label>
+      <label [class.complete]="todo.isComplete">{{ todo.description }}</label>
+    </ng-template>
+  </div>
+  <div class="right">
+    <button
+      class="save"
+      *ngIf="isEditing"
+      (click)="onEditTodoDescription()"
+    ></button>
+    <button
+      class="edit"
+      *ngIf="!isEditing"
+      (click)="toggleIsEditing()"
+    ></button>
+    <button class="destroy" (click)="deleteTodo()"></button>
+  </div>
+</div>

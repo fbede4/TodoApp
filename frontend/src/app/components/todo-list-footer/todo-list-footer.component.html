@@ -1,0 +1,12 @@
+<footer class="footer" *ngIf="data.totalCount > 0">
+  <mat-paginator
+    class="paginator"
+    *ngIf="data"
+    [pageSizeOptions]="[5, 10, 25]"
+    (page)="loadData($event.pageIndex, $event.pageSize)"
+    [pageSize]="data.pageSize"
+    [length]="data.totalCount"
+    [pageIndex]="data.pageIndex"
+  >
+  </mat-paginator>
+</footer>

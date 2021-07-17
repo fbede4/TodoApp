@@ -1,0 +1,67 @@
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px 15px 25px;
+
+  .left {
+    display: flex;
+    align-items: center;
+
+    mat-checkbox {
+      margin-right: 45px;
+    }
+
+    label {
+      word-break: break-all;
+      display: block;
+      transition: color 0.4s;
+    }
+
+    .complete {
+      color: #d9d9d9;
+      text-decoration: line-through;
+    }
+
+    input {
+      margin-top: 0;
+    }
+  }
+
+  .right {
+    display: flex;
+    align-items: center;
+
+    .destroy {
+      color: #cc9a9a;
+      transition: color 0.2s ease-out;
+    }
+
+    .destroy:after {
+      content: "×";
+    }
+
+    .edit:hover,
+    .save:hover,
+    .destroy:hover {
+      color: #af5b5e;
+      cursor: pointer;
+    }
+
+    .edit::after {
+      content: "✎";
+    }
+
+    .save,
+    .edit {
+      margin-right: 1rem;
+      color: #cc9a9a;
+      transition: color 0.2s ease-out;
+    }
+
+    .save::after {
+      content: "✓";
+      font-weight: 900;
+    }
+  }
+}
