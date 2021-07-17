@@ -22,7 +22,7 @@ namespace TodoApp.Api.IntegrationTests.Scenarios
         }
 
         [Fact]
-        public async Task DeleteTodoEndpoint_ShouldDeleteTodo_WhenIdExists()
+        public async Task DeleteTodoEndpoint_ShouldReturnOkAndDeleteTodo_WhenIdExists()
         {
             // Arrange
             var todo = new Todo("Some description");

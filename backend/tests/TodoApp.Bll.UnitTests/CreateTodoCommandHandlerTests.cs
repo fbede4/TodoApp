@@ -18,7 +18,7 @@ namespace TodoApp.Bll.UnitTests
         }
 
         [Fact]
-        public async Task CreateTodoCommandHandler_ShouldCreateTodo_WhenAllParametersAreValid()
+        public async Task CreateTodoCommandHandler_ShouldInsertTodo_Always()
         {
             // Arrange
             var createTodoCommand = new CreateTodoCommand
