@@ -14,6 +14,7 @@ namespace TodoApp.Api.IntegrationTests.Scenarios
     {
         protected readonly WebApplicationFactory<Startup> factory;
         protected readonly HttpClient httpClient;
+        private const string EndpointRoute = "api/todos/";
 
         public DeleteTodoTests()
         {
@@ -35,7 +36,7 @@ namespace TodoApp.Api.IntegrationTests.Scenarios
             }
 
             // Act
-            var httpResponseMessage = await httpClient.DeleteAsync($"api/todos/{todo.Id}");
+            var httpResponseMessage = await httpClient.DeleteAsync($"{EndpointRoute}{todo.Id}");
 
             // Assert
             httpResponseMessage.StatusCode.Should().Be(200);
@@ -56,7 +57,7 @@ namespace TodoApp.Api.IntegrationTests.Scenarios
             var nonExistentId = 14;
 
             // Act
-            var httpResponseMessage = await httpClient.DeleteAsync($"todos/{nonExistentId}");
+            var httpResponseMessage = await httpClient.DeleteAsync($"{EndpointRoute}{nonExistentId}");
 
             // Assert
             httpResponseMessage.StatusCode.Should().Be(404);
