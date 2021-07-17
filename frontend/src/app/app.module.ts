@@ -19,6 +19,7 @@ import { TodoListFooterComponent } from './components/todo-list-footer/todo-list
 import { TodoListItemComponent } from './components/todo-list-item/todo-list-item.component';
 import { NewTodoComponent } from './components/new-todo/new-todo.component';
 import { FiltersComponent } from './components/filters/filters.component';
+import { FocusDirective } from './directives/focus.directive';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { FiltersComponent } from './components/filters/filters.component';
     TodoListItemComponent,
     NewTodoComponent,
     FiltersComponent,
+    FocusDirective,
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,7 @@ import { FiltersComponent } from './components/filters/filters.component';
     MatPaginatorModule,
     MatCheckboxModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
     {

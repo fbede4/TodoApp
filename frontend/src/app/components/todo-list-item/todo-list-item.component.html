@@ -11,11 +11,13 @@
         <mat-form-field>
           <input
             matInput
-            [(ngModel)]="todo.description"
             (keyup.enter)="onEditTodoDescription()"
             formControlName="description"
+            appFocus
           />
-          <mat-error *ngIf="form.controls.description.errors?.required">Description is required</mat-error>
+          <mat-error *ngIf="form.controls.description.errors?.required"
+            >Description is required</mat-error
+          >
         </mat-form-field>
       </form>
     </div>

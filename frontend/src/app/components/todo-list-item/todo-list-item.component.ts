@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TodoItem } from '@app/clients';
 
@@ -7,7 +7,7 @@ import { TodoItem } from '@app/clients';
   templateUrl: './todo-list-item.component.html',
   styleUrls: ['./todo-list-item.component.scss'],
 })
-export class TodoListItemComponent {
+export class TodoListItemComponent implements OnInit {
   isEditing: boolean;
   form: FormGroup;
 
@@ -22,9 +22,11 @@ export class TodoListItemComponent {
   @Output()
   toggleIsComplete: EventEmitter<TodoItem> = new EventEmitter();
 
-  constructor(formBuilder: FormBuilder) {
-    this.form = formBuilder.group({
-      description: ['', [Validators.required]],
+  constructor(private formBuilder: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      description: [this.todo.description, [Validators.required]],
     });
   }
 
@@ -34,6 +36,7 @@ export class TodoListItemComponent {
 
   onEditTodoDescription(): void {
     if (!this.form.controls.description.errors?.required) {
+      this.todo.description = this.form.controls.description.value;
       this.toggleIsEditing();
       this.edit.emit(this.todo);
     }

@@ -1,7 +1,7 @@
 <input
   class="new-todo"
   placeholder="What needs to be done?"
-  autofocus=""
+  appFocus
   [(ngModel)]="newTodo.description"
   (keyup.enter)="addTodo()"
 />
