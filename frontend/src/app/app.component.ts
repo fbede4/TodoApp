@@ -58,7 +58,7 @@ export class AppComponent implements OnInit {
 
   onToggleTodoIsComplete(todo: TodoItem): void {
     const command = new PatchTodoCommand({
-      isComplete: todo.isComplete,
+      isComplete: !todo.isComplete,
     });
 
     this.todosService.patchTodo(todo.id, command).subscribe(() => {

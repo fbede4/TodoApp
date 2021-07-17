@@ -3,8 +3,8 @@
     <mat-checkbox
       class="checkbox"
       color="primary"
-      [(ngModel)]="todo.isComplete"
-      (ngModelChange)="onToggleIsComplete()"
+      [checked]="todo.isComplete"
+      (click)="onToggleIsComplete()"
     ></mat-checkbox>
     <div>
       <mat-form-field *ngIf="isEditing; else label">

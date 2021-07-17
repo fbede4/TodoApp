@@ -39,7 +39,7 @@ import { FiltersComponent } from './components/filters/filters.component';
     HttpClientModule,
     MatPaginatorModule,
     MatCheckboxModule,
-    MatInputModule
+    MatInputModule,
   ],
   providers: [
     {

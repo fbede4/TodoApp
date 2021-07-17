@@ -1,6 +1,9 @@
 <section class="todoapp" *ngIf="data">
   <app-todo-list-header></app-todo-list-header>
-  <app-filters [filter]="filter" (filterChanged)="onFilterChanged($event)"></app-filters>
+  <app-filters
+    [filter]="filter"
+    (filterChanged)="onFilterChanged($event)"
+  ></app-filters>
   <app-new-todo (add)="onAddTodo($event)"></app-new-todo>
   <app-todo-list
     [data]="data"
@@ -8,5 +11,8 @@
     (delete)="onDeleteTodo($event)"
     (editTodoDescription)="onEditTodoDescription($event)"
   ></app-todo-list>
-  <app-todo-list-footer (reloadTable)="loadTodos($event.pageIndex, $event.pageSize)" [data]="data"></app-todo-list-footer>
+  <app-todo-list-footer
+    (reloadTable)="loadTodos($event.pageIndex, $event.pageSize)"
+    [data]="data"
+  ></app-todo-list-footer>
 </section>
