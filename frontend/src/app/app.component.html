@@ -6,6 +6,7 @@
     [data]="data"
     (toggleIsComplete)="onToggleTodoIsComplete($event)"
     (delete)="onDeleteTodo($event)"
+    (editTodoDescription)="onEditTodoDescription($event)"
   ></app-todo-list>
   <app-todo-list-footer (reloadTable)="loadTodos($event.pageIndex, $event.pageSize)" [data]="data"></app-todo-list-footer>
 </section>

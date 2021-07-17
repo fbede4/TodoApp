@@ -15,7 +15,7 @@ export class TodoListComponent {
   delete: EventEmitter<TodoItem> = new EventEmitter();
 
   @Output()
-  edit: EventEmitter<TodoItem> = new EventEmitter();
+  editTodoDescription: EventEmitter<TodoItem> = new EventEmitter();
 
   @Output()
   toggleIsComplete: EventEmitter<TodoItem> = new EventEmitter();
@@ -25,7 +25,7 @@ export class TodoListComponent {
   }
 
   onEditTodoDescription(todo: TodoItem): void {
-    this.edit.emit(todo);
+    this.editTodoDescription.emit(todo);
   }
 
   onDeleteTodo(todo: TodoItem): void {

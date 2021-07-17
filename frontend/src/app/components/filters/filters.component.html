@@ -1,11 +1,4 @@
 <div class="filters">
-  <mat-form-field class="search-form">
-    <input
-      (keyup)="onSearchTermChanged($event.target.value)"
-      matInput
-      placeholder="Search"
-    />
-  </mat-form-field>
   <mat-checkbox
     class="checkbox"
     color="primary"
@@ -20,4 +13,11 @@
     (click)="toggleshowIncompleteTodos()"
     >Show incomplete todos</mat-checkbox
   >
+  <mat-form-field class="search-form">
+    <input
+      (keyup)="onSearchTermChanged($event.target.value)"
+      matInput
+      placeholder="Search"
+    />
+  </mat-form-field>
 </div>

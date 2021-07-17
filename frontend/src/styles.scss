@@ -48,3 +48,7 @@ body {
   z-index: 2;
   border-top: 1px solid $color-secondary;
 }
+
+.mat-form-field-infix {
+  width: auto !important;
+}
