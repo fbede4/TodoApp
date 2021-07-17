@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -5,7 +6,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 using TodoApp.Dal;
+using TodoApp.Dal.Repositories;
+using TodoApp.Dal.UoW;
+using TodoApp.Domain.Repositories;
+using TodoApp.Domain.UoW;
 
 namespace TodoApp.Api
 {
@@ -25,6 +31,12 @@ namespace TodoApp.Api
             {
                 opt.UseSqlite(Configuration.GetConnectionString("TodoAppDbContext"));
             });
+
+            services.AddScoped<IUnitOfWork, EfCoreUnitOfWork>(sp => new EfCoreUnitOfWork(sp.GetRequiredService<TodoAppDbContext>()));
+
+            services.AddScoped<ITodoRepository, TodoRepository>();
+
+            services.AddMediatR(Assembly.Load("TodoApp.Bll"));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
