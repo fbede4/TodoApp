@@ -1,8 +1,9 @@
 <section class="todoapp" *ngIf="data">
   <app-todo-list-header></app-todo-list-header>
   <app-filters
-    [filter]="filter"
-    (filterChanged)="onFilterChanged($event)"
+    (searchTermChanged)="onSearchTermChanged($event)"
+    (toggleShowCompletedTodos)="onToggleShowCompletedTodos()"
+    (toggleShowIncompleteTodos)="onToggleShowIncompleteTodos()"
   ></app-filters>
   <app-new-todo (add)="onAddTodo($event)"></app-new-todo>
   <app-todo-list

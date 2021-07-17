@@ -14,11 +14,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  filter: FilterModel = {
-    showCompletedTodos: true,
-    showIncompleteTodos: true,
-    searchTerm: '',
-  };
+  filter: FilterModel = new FilterModel();
   data: PagedListOfTodoItem;
 
   constructor(private todosService: TodosService) {}
@@ -27,7 +23,7 @@ export class AppComponent implements OnInit {
     this.loadTodos();
   }
 
-  loadTodos(pageIndex: number = 0, pageSize: number = 10): void {
+  loadTodos(pageIndex: number = 0, pageSize: number = 25): void {
     this.todosService
       .getTodos(this.filter, pageIndex, pageSize)
       .subscribe((todos) => {
@@ -41,11 +37,6 @@ export class AppComponent implements OnInit {
     });
   }
 
-  onFilterChanged(filter: FilterModel): void {
-    this.filter = filter;
-    this.loadTodos();
-  }
-
   onEditTodoDescription(todo: TodoItem): void {
     const command = new PatchTodoCommand({
       description: todo.description,
@@ -54,6 +45,21 @@ export class AppComponent implements OnInit {
     this.todosService.patchTodo(todo.id, command).subscribe(() => {
       this.loadTodos();
     });
+  }
+
+  onSearchTermChanged(searchTerm: string): void {
+    this.filter.searchTerm = searchTerm;
+    this.loadTodos();
+  }
+
+  onToggleShowCompletedTodos(): void {
+    this.filter.showCompletedTodos = !this.filter.showCompletedTodos;
+    this.loadTodos();
+  }
+
+  onToggleShowIncompleteTodos(): void {
+    this.filter.showIncompleteTodos = !this.filter.showIncompleteTodos;
+    this.loadTodos();
   }
 
   onToggleTodoIsComplete(todo: TodoItem): void {

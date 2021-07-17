@@ -2,15 +2,15 @@
   <mat-checkbox
     class="checkbox"
     color="primary"
-    ngModel="filter.showCompletedTodos"
-    (click)="toggleshowCompletedTodos()"
+    [checked]="filter.showCompletedTodos"
+    (click)="onToggleShowCompletedTodos()"
     >Show complete todos</mat-checkbox
   >
   <mat-checkbox
     class="checkbox"
     color="primary"
-    ngModel="filter.showIncompleteTodos"
-    (click)="toggleshowIncompleteTodos()"
+    [checked]="filter.showIncompleteTodos"
+    (click)="onToggleShowIncompleteTodos()"
     >Show incomplete todos</mat-checkbox
   >
   <mat-form-field class="search-form">

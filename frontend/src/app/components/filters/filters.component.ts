@@ -1,5 +1,5 @@
 import { FilterModel } from '@app/models/filter.model';
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { debounce } from '@app/utils/debounce.decorator';
 
 @Component({
@@ -8,29 +8,28 @@ import { debounce } from '@app/utils/debounce.decorator';
   styleUrls: ['./filters.component.scss'],
 })
 export class FiltersComponent {
-  @Input()
-  filter: FilterModel;
+  filter: FilterModel = new FilterModel();
 
   @Output()
-  filterChanged: EventEmitter<FilterModel> = new EventEmitter();
+  searchTermChanged: EventEmitter<string> = new EventEmitter();
 
-  toggleshowCompletedTodos(): void {
-    this.filter.showCompletedTodos = !this.filter.showCompletedTodos;
-    this.emitFilterChanged();
+  @Output()
+  toggleShowCompletedTodos: EventEmitter<void> = new EventEmitter();
+
+  @Output()
+  toggleShowIncompleteTodos: EventEmitter<void> = new EventEmitter();
+
+  onToggleShowCompletedTodos(): void {
+    this.toggleShowCompletedTodos.emit();
   }
 
-  toggleshowIncompleteTodos(): void {
-    this.filter.showIncompleteTodos = !this.filter.showIncompleteTodos;
-    this.emitFilterChanged();
+  onToggleShowIncompleteTodos(): void {
+    this.toggleShowIncompleteTodos.emit();
   }
 
   @debounce(500)
   onSearchTermChanged(newValue: string): void {
     this.filter.searchTerm = newValue;
-    this.emitFilterChanged();
-  }
-
-  emitFilterChanged(): void {
-    this.filterChanged.emit(this.filter);
+    this.searchTermChanged.emit(this.filter.searchTerm);
   }
 }

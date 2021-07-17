@@ -1,5 +1,5 @@
-export interface FilterModel {
-  searchTerm: string;
-  showCompletedTodos: boolean;
-  showIncompleteTodos: boolean;
+export class FilterModel {
+  searchTerm = '';
+  showCompletedTodos = true;
+  showIncompleteTodos = true;
 }
