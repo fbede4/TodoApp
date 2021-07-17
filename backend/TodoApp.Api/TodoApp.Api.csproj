@@ -12,4 +12,9 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TodoApp.Bll\TodoApp.Bll.csproj" />
+    <ProjectReference Include="..\TodoApp.Dal\TodoApp.Dal.csproj" />
+  </ItemGroup>
+
 </Project>
