@@ -16,7 +16,6 @@ namespace TodoApp.Api.Middlewares.ErrorHandling
         private readonly ILogger<ErrorHandlerMiddleware> logger;
         private readonly JsonSerializerOptions jsonSerializerOptions;
         private readonly IHostEnvironment hostEnvironment;
-        private const string MessageTemplate = "Unhandled {Exception} caught.";
 
         public ErrorHandlerMiddleware(
             RequestDelegate next,
@@ -39,7 +38,7 @@ namespace TodoApp.Api.Middlewares.ErrorHandling
             }
             catch (EntityNotFoundException e)
             {
-                logger.LogError(e, MessageTemplate, e.GetType().Name);
+                LogError(e);
 
                 await WriteResponseAsJsonAsync(
                     context,
@@ -52,7 +51,7 @@ namespace TodoApp.Api.Middlewares.ErrorHandling
             }
             catch (Exception e)
             {
-                logger.LogError(e, MessageTemplate, e.GetType().Name);
+                LogError(e);
 
                 await WriteResponseAsJsonAsync(
                     context,
@@ -63,6 +62,11 @@ namespace TodoApp.Api.Middlewares.ErrorHandling
                         StackTrace = e.StackTrace
                     });
             }
+        }
+
+        private void LogError(Exception e)
+        {
+            logger.LogError(e, $"Unhandled {e.GetType().Name} caught.");
         }
 
         private Task WriteResponseAsJsonAsync(HttpContext context, HttpStatusCode statusCode, ErrorResponse payload)

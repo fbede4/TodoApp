@@ -1,8 +1,6 @@
 ﻿using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System.Net.Http;
 using System.Threading.Tasks;
 using TodoApp.Dal;
 using TodoApp.Domain.Model;
@@ -10,17 +8,9 @@ using Xunit;
 
 namespace TodoApp.Api.IntegrationTests.Scenarios
 {
-    public class DeleteTodoTests : IClassFixture<TestWebApplicationFactory>
+    public class DeleteTodoTests : TestBase
     {
-        protected readonly WebApplicationFactory<Startup> factory;
-        protected readonly HttpClient httpClient;
-        private const string EndpointRoute = "api/todos/";
-
-        public DeleteTodoTests()
-        {
-            factory = new TestWebApplicationFactory();
-            httpClient = factory.CreateClient();
-        }
+        public override string EndpointRoute => "api/todos";
 
         [Fact]
         public async Task DeleteTodoEndpoint_ShouldReturnOkAndDeleteTodo_WhenIdExists()
@@ -36,7 +26,7 @@ namespace TodoApp.Api.IntegrationTests.Scenarios
             }
 
             // Act
-            var httpResponseMessage = await httpClient.DeleteAsync($"{EndpointRoute}{todo.Id}");
+            var httpResponseMessage = await httpClient.DeleteAsync($"{EndpointRoute}/{todo.Id}");
 
             // Assert
             httpResponseMessage.StatusCode.Should().Be(200);
@@ -57,7 +47,7 @@ namespace TodoApp.Api.IntegrationTests.Scenarios
             var nonExistentId = 14;
 
             // Act
-            var httpResponseMessage = await httpClient.DeleteAsync($"{EndpointRoute}{nonExistentId}");
+            var httpResponseMessage = await httpClient.DeleteAsync($"{EndpointRoute}/{nonExistentId}");
 
             // Assert
             httpResponseMessage.StatusCode.Should().Be(404);

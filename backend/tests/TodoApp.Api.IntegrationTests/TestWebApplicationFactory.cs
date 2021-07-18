@@ -1,9 +1,8 @@
-﻿using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
+using System.Linq;
 using TodoApp.Dal;
 
 namespace TodoApp.Api.IntegrationTests
@@ -15,12 +14,10 @@ namespace TodoApp.Api.IntegrationTests
             builder
                 .ConfigureServices(services =>
                 {
-                    services.AddControllers()
-                        .AddApplicationPart(Assembly.Load("TodoApp.Api"))
-                        .AddFluentValidation(opt =>
-                        {
-                            opt.RegisterValidatorsFromAssembly(Assembly.Load("TodoApp.Bll"));
-                        });
+                    var dbContextServiceDescriptor = services
+                        .SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<TodoAppDbContext>));
+
+                    services.Remove(dbContextServiceDescriptor);
 
                     services.AddDbContext<TodoAppDbContext>(opt =>
                     {

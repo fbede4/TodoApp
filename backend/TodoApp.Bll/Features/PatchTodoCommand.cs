@@ -21,6 +21,7 @@ namespace TodoApp.Bll.Features
     {
         public PatchTodoCommandValidator()
         {
+            // as it is a patch endpoint, we only validate non-null values
             RuleFor(command => command.Description).NotEmpty().When(command => command.Description != null);
         }
     }
